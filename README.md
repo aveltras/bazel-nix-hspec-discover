@@ -19,7 +19,7 @@ and
 bazel run :repl
 ```
 
-with currently works with
+which currently works with
 
 ```hs
 {-# OPTIONS_GHC -F -pgmF hspec-discover #-}
