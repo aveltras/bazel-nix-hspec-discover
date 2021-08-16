@@ -1,0 +1,34 @@
+load(
+    "@rules_haskell//haskell:defs.bzl",
+    "haskell_toolchain_library",
+    "haskell_library",
+    "haskell_test",
+    "haskell_repl",
+)
+
+haskell_toolchain_library(name="base")
+haskell_toolchain_library(name="hspec")
+
+haskell_library(
+    name = "lib",
+    srcs = glob(["src/**/*.hs"]),
+    src_strip_prefix = "src",
+    visibility = [ "//visibility:public" ],
+    deps = [ "base" ],
+)
+
+haskell_test(
+    name = "test",
+    srcs = glob(["test/**/*.hs"]),
+    src_strip_prefix = "test",
+    tools = ["@hspec-discover//:bin"],
+    compiler_flags = ["-DHSPEC_DISCOVER=$(execpath @hspec-discover//:bin)"],
+    visibility = [ "//visibility:public" ],
+    deps = [ "base", "hspec", ":lib" ],
+)
+
+haskell_repl(
+    name = "repl",
+    testonly = True,
+    deps = [ ":lib", ":test" ],
+)
