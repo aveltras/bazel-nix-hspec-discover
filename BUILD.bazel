@@ -21,8 +21,9 @@ haskell_test(
     name = "test",
     srcs = glob(["test/**/*.hs"]),
     src_strip_prefix = "test",
-    tools = ["@hspec-discover//:bin"],
-    compiler_flags = ["-DHSPEC_DISCOVER=$(execpath @hspec-discover//:bin)"],
+    main_function = "Spec.main",
+    tools = ["@hspec-discover"],
+    compiler_flags = ["-DHSPEC_DISCOVER=$(execpath @hspec-discover)"],
     visibility = [ "//visibility:public" ],
     deps = [ "base", "hspec", ":lib" ],
 )

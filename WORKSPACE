@@ -40,4 +40,13 @@ nixpkgs_package(
     name = "hspec-discover",
     attribute_path = "haskellPackages.hspec-discover",
     repository = "@nixpkgs",
+    build_file_content = """\
+load("@bazel_skylib//rules:copy_file.bzl", "copy_file")
+copy_file(
+    name = "hspec-discover-copy",
+    src = "bin/hspec-discover",
+    out = "hspec-discover",
+    visibility = ["//visibility:public"],
+)
+""",
 )
